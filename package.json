@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\"",
         "dev2": "nodemon ./src/server.js",
-        "start": "node ./src/server.js",
+        "start": "nodemon ./src/server.js",
         "buildclient": "cd clientApp && ng build",
         "runclient": "cd clientApp && npm start",
         "devstart": "nodemon --inspect ./src/server.js",
@@ -30,9 +30,7 @@
         "powerbi-client": "^2.16.5",
         "puppeteer": "^5.5.0",
         "sequelize": "^6.6.2",
-        "tedious": "^11.0.8"
-    },
-    "devDependencies": {
+        "tedious": "^11.0.8",
         "nodemon": "^2.0.7"
-    }
+    }    
 }
