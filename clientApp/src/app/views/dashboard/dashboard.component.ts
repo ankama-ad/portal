@@ -1,4 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
+//const GRAPH_ENDPOINT_M = 'https://graph.microsoft.com/v1.0/departments';
+// const GRAPH_ENDPOINT_M = 'https://graph.microsoft.com/v1.0/users?$select=department,givenName ';
+const GRAPH_ENDPOINT_M = 'https://graph.microsoft.com/v1.0/users/anudeep@powerbiaxes.onmicrosoft.com';
+
+type ProfileType = {
+  givenName?: string,
+  surname?: string,
+  userPrincipalName?: string,
+  id?: string
+};
 
 @Component({
   selector: 'app-dashboard',
@@ -6,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
+  profile!: ProfileType;
   DCBT : Number;
   DCBH : Number;
   VRT : Number;
@@ -16,11 +29,17 @@ export class DashboardComponent implements OnInit {
   TVHW : Number;
   TVTS : Number;
  
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
-    this.LoadValues();
+    this.getProfile();
   }
+
+  // ngOnInit() {
+  //   this.LoadValues();
+  // }
 
   LoadValues(){
     this.DCBT = 120;
@@ -33,4 +52,16 @@ export class DashboardComponent implements OnInit {
     this.TVTS = 29;
   }
 
+  getProfile() {
+    this.http.get(GRAPH_ENDPOINT)
+      .subscribe(profile => {
+        this.profile = profile;
+        console.log('profile', this.profile)
+      });
+
+      this.http.get(GRAPH_ENDPOINT_M)
+      .subscribe(res => {
+        console.log("manager" , res);
+      });
+  }
 }
