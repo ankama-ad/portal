@@ -5,11 +5,11 @@
     "main": "./src/server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev2": "nodemon ./src/server.js",
-        "start": "nodemon ./src/server.js",
+        "dev2": "nodemon ./server.js",
+        "start": "nodemon ./server.js",
         "buildclient": "cd .. && ng build",
         "runclient": "cd .. && npm start",
-        "devstart": "nodemon --inspect ./src/server.js",
+        "devstart": "nodemon --inspect ./server.js",
         "dev": "npm run buildclient & concurrently --kill-others \"npm run runclient\" \"npm run devstart\""
     },
     "author": "",
@@ -31,10 +31,14 @@
         "node-fetch": "^2.6.1",
         "path": "^0.12.7",
         "powerbi-client": "^2.16.5",
-        "puppeteer": "^5.5.0",
         "sequelize": "^6.6.2",
         "tedious": "^11.0.8",
-        "windows-iana": "^4.2.1"
+        "windows-iana": "^4.2.1",
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "http-errors": "~1.6.3",
+        "jade": "~1.11.0",
+        "morgan": "~1.9.1"
     },
     "devDependencies": {
         "nodemon": "^2.0.7"

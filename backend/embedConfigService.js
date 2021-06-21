@@ -4,10 +4,10 @@
 // ----------------------------------------------------------------------------
 
 const auth = require(__dirname + "/authentication.js");
-const config = require(__dirname + "/../config/config.json");
+const config = require(__dirname + "/config/config.json");
 const utils = require(__dirname + "/utils.js");
-const PowerBiReportDetails = require(__dirname + "/../models/embedReportConfig.js");
-const EmbedConfig = require(__dirname + "/../models/embedConfig.js");
+const PowerBiReportDetails = require(__dirname + "/models/embedReportConfig.js");
+const EmbedConfig = require(__dirname + "/models/embedConfig.js");
 const fetch = require('node-fetch');
 
 
