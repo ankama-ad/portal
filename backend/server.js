@@ -47,7 +47,11 @@ const port = process.env.PORT || 8080;
 // }));
 
 app.use('/api/powerbi', powerbiRouter);
+<<<<<<< HEAD:backend/server.js
 app.use('/api/users', usersRoutes);
+=======
+app.use('/users', usersRoutes);
+>>>>>>> 3d6876960f0dbfe9eea7761546f661bfcc6bd444:backend/src/server.js
 app.use('/api/reports', reportRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/feedbacks', feedbackRoutes);
