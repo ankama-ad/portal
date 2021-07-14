@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "devstart": "nodemon ./server.js",
-    "start": "node ./bin/www"    
+    "start2": "node ./bin/www",
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "@azure/msal-node": "^1.0.0-beta.0",
