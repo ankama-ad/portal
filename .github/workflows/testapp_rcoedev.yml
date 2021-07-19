@@ -52,5 +52,5 @@ jobs:
       with:
         app-name: 'rcoedev'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_2fa26612c22e433bb0ad8d50b4f3cbbe }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_7e518be7712e47b6b5326d7699bae58c }}
         package: .
