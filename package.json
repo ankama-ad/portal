@@ -31,7 +31,8 @@
     "devstart": "nodemon --inspect ./backend/server.js",
     "dev": "npm run buildclient & concurrently --kill-others \"npm run runclient\" \"npm run devstart\"",
     "startapp": "concurrently --kill-others \"npm run runclient\" \"npm run devstart\"",
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "start2": "nodemon ./server.js"
   },
   "private": true,
   "dependencies": {
