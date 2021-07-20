@@ -32,7 +32,8 @@
     "dev": "npm run buildclient & concurrently --kill-others \"npm run runclient\" \"npm run devstart\"",
     "startapp": "concurrently --kill-others \"npm run runclient\" \"npm run devstart\"",
     "start": "node ./bin/www",
-    "start2": "nodemon ./server.js"
+    "start2": "nodemon ./server.js",
+    "start_azure_debug": "node --inspect=0.0.0.0:$APPSVC_TUNNEL_PORT \/bin\/www"  
   },
   "private": true,
   "dependencies": {
