@@ -15,6 +15,10 @@ router.get('/getAdminRoleTypes', [
     userrolesService.getAdminRoleTypess
 ]);
 
+router.get('/getAdminRoleUsers/:adminRoleId/:adminRoleTypId', [    
+    userrolesService.getAdminRoleUsers
+]);
+
 router.put('/updateUserRole', [ 
     //ValidationMiddleware.validJWTNeeded,
     // PermissionMiddleware.minimumPermissionLevelRequired(PAID),

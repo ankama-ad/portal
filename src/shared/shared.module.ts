@@ -5,7 +5,11 @@ import { ConfirmDialogComponent } from '../app/shared/confirm-dialog/confirm-dia
 import { EmbeddedReportComponent } from '../app/views/embedded-report/embedded-report.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { MdePopoverModule } from '@material-extended/mde';
-import { MatDialogModule, MatListModule, MatButtonModule, MatIconModule, MatPaginatorModule, MatSnackBarModule, MatOptionModule, MatSelectModule, MatCheckboxModule, MatSortModule, MatCardModule, MatButtonToggleModule, MatTableModule, MatTabsModule, MatCommonModule, MatInputModule, MatCard, MatSlideToggleModule, MatDividerModule } from '@angular/material';
+import {
+  MatDialogModule, MatListModule, MatButtonModule, MatIconModule, MatPaginatorModule, MatSnackBarModule,
+   MatOptionModule, MatSelectModule, MatCheckboxModule, MatSortModule, MatCardModule, MatButtonToggleModule, MatTableModule, 
+   MatTabsModule, MatCommonModule, MatInputModule, MatCard, MatSlideToggleModule, MatDividerModule } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk/table';
 //import { MatDatepickerModule,MatNativeDateModule,MatFormFieldModule, MatInputModule } from '@angular/material';
 
 @NgModule({
@@ -33,7 +37,8 @@ import { MatDialogModule, MatListModule, MatButtonModule, MatIconModule, MatPagi
     MatSlideToggleModule,
     MatSnackBarModule,
     MatDividerModule,
-    MdePopoverModule
+    MdePopoverModule,
+    CdkTableModule
     // MatDatepickerModule,
     // MatNativeDateModule,
     // MatFormFieldModule,
@@ -64,7 +69,8 @@ import { MatDialogModule, MatListModule, MatButtonModule, MatIconModule, MatPagi
     MatSlideToggleModule,
     MatSnackBarModule,
     MatDividerModule,
-    MdePopoverModule
+    MdePopoverModule,
+    CdkTableModule
     // MatDatepickerModule,
     // MatNativeDateModule,
     // MatFormFieldModule,
