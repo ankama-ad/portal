@@ -38,6 +38,14 @@ export class RolesAndPermissionsComponent implements OnInit {
     loadUserRoles(){
       this.userRolesService.getAdminRoles().subscribe(res => {
         if (res.length) {
+          res.forEach(c => {
+            if (c.adminRoleName == 'Department Admin (Default)') {
+                c.assignedUsers = 11
+            }
+            if (c.adminRoleName == 'Group Admin (Default)') {
+              c.assignedUsers = 2
+          }
+          })
           this.userRoles = res;
           this.dataSource = new MatTableDataSource(this.userRoles);
           this.dataSource.paginator = this.paginator;

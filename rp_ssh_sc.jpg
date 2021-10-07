@@ -1,0 +1,1258 @@
+/****** Object:  Table [dbo].[AccessLevel]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AccessLevel](
+	[access_level_id] [int] IDENTITY(1,1) NOT NULL,
+	[access_level_name] [varchar](50) NOT NULL,
+	[description] [varchar](256) NULL,
+	[is_active] [smallint] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[can_view] [bit] NOT NULL,
+	[can_approve] [bit] NOT NULL,
+	[can_share] [bit] NOT NULL,
+	[can_subscribe] [bit] NOT NULL,
+ CONSTRAINT [PK_AccessLevel] PRIMARY KEY CLUSTERED 
+(
+	[access_level_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AccessLevelDesignations]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AccessLevelDesignations](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[access_level_id] [int] NOT NULL,
+	[department_id] [int] NULL,
+	[designation_id] [int] NULL,
+	[is_active] [smallint] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_AccessLevelDesignations] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[admin_permission_category]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[admin_permission_category](
+	[admin_permission_category_id] [int] IDENTITY(1,1) NOT NULL,
+	[admin_permission_category_name] [varchar](256) NULL,
+	[parent_category_id] [int] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_admin_permission_category_id] PRIMARY KEY CLUSTERED 
+(
+	[admin_permission_category_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[admin_permission_category_configuration]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[admin_permission_category_configuration](
+	[admin_permission_category_configuration_id] [int] IDENTITY(1,1) NOT NULL,
+	[admin_role_type_id] [int] NULL,
+	[admin_permission_category_id] [int] NULL,
+	[admin_permission_id] [int] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_admin_permission_category_configuration_id] PRIMARY KEY CLUSTERED 
+(
+	[admin_permission_category_configuration_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[admin_permissions]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[admin_permissions](
+	[admin_permission_id] [int] IDENTITY(1,1) NOT NULL,
+	[admin_permission_name] [varchar](256) NULL,
+	[admin_permission_category_id] [int] NULL,
+	[is_view] [bit] NULL,
+	[is_add] [bit] NULL,
+	[is_edit] [bit] NULL,
+	[is_delete] [bit] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[admin_permission_description] [varchar](512) NULL,
+ CONSTRAINT [pk_admin_permission_id] PRIMARY KEY CLUSTERED 
+(
+	[admin_permission_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[admin_role_permissions]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[admin_role_permissions](
+	[admin_role_permission_id] [int] IDENTITY(1,1) NOT NULL,
+	[admin_role_id] [int] NOT NULL,
+	[admin_role_type_id] [int] NULL,
+	[admin_permission_id] [int] NULL,
+	[is_view] [bit] NULL,
+	[is_add] [bit] NULL,
+	[is_edit] [bit] NULL,
+	[is_delete] [bit] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_admin_role_permission_id] PRIMARY KEY CLUSTERED 
+(
+	[admin_role_permission_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[admin_role_type_permission_configuration]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[admin_role_type_permission_configuration](
+	[admin_role_type_permission_configuration_id] [int] IDENTITY(1,1) NOT NULL,
+	[admin_role_type_id] [int] NULL,
+	[admin_permission_id] [int] NULL,
+	[is_view] [bit] NULL,
+	[is_add] [bit] NULL,
+	[is_edit] [bit] NULL,
+	[is_delete] [bit] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_admin_role_type_permission_configuration_id] PRIMARY KEY CLUSTERED 
+(
+	[admin_role_type_permission_configuration_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[admin_role_types]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[admin_role_types](
+	[admin_role_type_id] [int] IDENTITY(1,1) NOT NULL,
+	[admin_role_type_name] [varchar](256) NULL,
+	[entity] [varchar](256) NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_admin_role_type] PRIMARY KEY CLUSTERED 
+(
+	[admin_role_type_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[admin_roles]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[admin_roles](
+	[admin_role_id] [int] IDENTITY(1,1) NOT NULL,
+	[admin_role_type_id] [int] NOT NULL,
+	[admin_role_name] [varchar](256) NULL,
+	[admin_role_description] [varchar](256) NULL,
+	[is_default_role] [bit] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_admin_role_id] PRIMARY KEY CLUSTERED 
+(
+	[admin_role_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[admin_users]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[admin_users](
+	[admin_user_id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[admin_role_id] [int] NOT NULL,
+	[department_id] [int] NULL,
+	[user_group_id] [int] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_admin_users_id] PRIMARY KEY CLUSTERED 
+(
+	[admin_user_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AdminTypes]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AdminTypes](
+	[admin_type_id] [int] IDENTITY(1,1) NOT NULL,
+	[type_name] [varchar](256) NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_AdminTypeID] PRIMARY KEY CLUSTERED 
+(
+	[admin_type_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Approval_master]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Approval_master](
+	[approval_id] [int] IDENTITY(1,1) NOT NULL,
+	[approval_user_id] [int] NOT NULL,
+	[report_id] [int] NULL,
+	[is_active] [smallint] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Approval_master] PRIMARY KEY CLUSTERED 
+(
+	[approval_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Constants]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Constants](
+	[constant_id] [int] IDENTITY(1,1) NOT NULL,
+	[constant_name] [varchar](256) NOT NULL,
+	[constant_value] [varchar](max) NOT NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Constants] PRIMARY KEY CLUSTERED 
+(
+	[constant_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[department_admin]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[department_admin](
+	[department_admin_id] [int] IDENTITY(1,1) NOT NULL,
+	[department_id] [int] NOT NULL,
+	[user_id] [int] NOT NULL,
+	[limit_to_group_admin] [int] NULL,
+	[limit_to_user_group] [int] NULL,
+	[is_enable_to_crt_group_admin] [bit] NOT NULL,
+	[is_enable_to_crt_user_groups] [bit] NOT NULL,
+	[is_enable_to_crt_usser_roles] [bit] NOT NULL,
+	[is_enable_to_add_new_report] [bit] NOT NULL,
+	[is_able_to_report_request_access] [bit] NOT NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[admin_role_id] [int] NULL,
+ CONSTRAINT [PK_AdminRolesID] PRIMARY KEY CLUSTERED 
+(
+	[department_admin_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[departments]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[departments](
+	[department_id] [int] IDENTITY(1,1) NOT NULL,
+	[department_name] [varchar](256) NULL,
+	[department_code] [varchar](50) NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[department_prefix] [varchar](256) NULL,
+	[department_description] [varchar](max) NULL,
+ CONSTRAINT [PK_Departments] PRIMARY KEY CLUSTERED 
+(
+	[department_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[feedback]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[feedback](
+	[feedback_id] [int] IDENTITY(1,1) NOT NULL,
+	[department_id] [int] NULL,
+	[topic] [varchar](256) NULL,
+	[feedback] [varchar](256) NOT NULL,
+	[status] [smallint] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Feedback] PRIMARY KEY CLUSTERED 
+(
+	[feedback_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[feedback_topics]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[feedback_topics](
+	[feedback_topic_id] [int] IDENTITY(1,1) NOT NULL,
+	[feedback_topic_name] [varchar](256) NULL,
+	[feedback_topic_desc] [varchar](256) NULL,
+	[topic_owner_id] [int] NOT NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_feedback_topics] PRIMARY KEY CLUSTERED 
+(
+	[feedback_topic_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[group_admin]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[group_admin](
+	[group_admin_id] [int] IDENTITY(1,1) NOT NULL,
+	[user_group_id] [int] NOT NULL,
+	[user_id] [int] NOT NULL,
+	[limit_to_user_group] [int] NULL,
+	[is_enable_to_crt_user_groups] [bit] NOT NULL,
+	[is_enable_to_crt_user_roles] [bit] NOT NULL,
+	[is_enable_to_add_new_report] [bit] NOT NULL,
+	[is_able_to_report_request_access] [bit] NOT NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[admin_role_id] [int] NULL,
+ CONSTRAINT [pk_group_admin] PRIMARY KEY CLUSTERED 
+(
+	[group_admin_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[group_members]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[group_members](
+	[group_member_id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[user_group_Id] [int] NULL,
+	[is_active] [smallint] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_GroupMembers] PRIMARY KEY CLUSTERED 
+(
+	[group_member_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[help_indexes]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[help_indexes](
+	[help_index_id] [int] IDENTITY(1,1) NOT NULL,
+	[help_section_id] [int] NOT NULL,
+	[title] [varchar](256) NOT NULL,
+	[help_content] [varchar](256) NOT NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_help_indexes] PRIMARY KEY CLUSTERED 
+(
+	[help_index_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[help_section]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[help_section](
+	[help_section_id] [int] IDENTITY(1,1) NOT NULL,
+	[help_section_name] [varchar](256) NOT NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_help_section] PRIMARY KEY CLUSTERED 
+(
+	[help_section_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[log_level_master]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[log_level_master](
+	[log_level_master_id] [int] IDENTITY(1,1) NOT NULL,
+	[log_level] [varchar](256) NULL,
+	[log_level_descrption] [varchar](512) NULL,
+	[is_active] [bit] NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NULL,
+	[created_by] [varchar](256) NULL,
+ CONSTRAINT [pk_log_level_master] PRIMARY KEY CLUSTERED 
+(
+	[log_level_master_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[logs]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[logs](
+	[logger_id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [varchar](256) NULL,
+	[username] [varchar](256) NULL,
+	[log_level] [varchar](256) NULL,
+	[log_description] [varchar](max) NULL,
+	[is_active] [bit] NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NULL,
+	[created_by] [varchar](256) NULL,
+	[request] [varchar](max) NULL,
+	[response] [varchar](max) NULL,
+ CONSTRAINT [pk_logger] PRIMARY KEY CLUSTERED 
+(
+	[logger_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[report_access]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[report_access](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[report_id] [int] NOT NULL,
+	[department_id] [int] NOT NULL,
+	[team_id] [int] NOT NULL,
+	[access_level_id] [int] NOT NULL,
+	[user_id] [int] NOT NULL,
+	[is_share] [bit] NOT NULL,
+	[is_subscribe] [bit] NOT NULL,
+	[is_export_pdf] [bit] NOT NULL,
+	[is_export_excel] [bit] NOT NULL,
+	[is_screen_shot] [bit] NOT NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_ReportAccess] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[report_category]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[report_category](
+	[category_id] [int] NOT NULL,
+	[category_name] [varchar](256) NULL,
+	[department_id] [int] NULL,
+	[description] [varchar](256) NOT NULL,
+	[is_active] [smallint] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_ReportCategoryMaster] PRIMARY KEY CLUSTERED 
+(
+	[category_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[report_filters]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[report_filters](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[report_id] [int] NOT NULL,
+	[filter_key] [varchar](256) NULL,
+	[filter_value] [varchar](256) NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_ReportFilters] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[report_requests]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[report_requests](
+	[report_request_id] [int] IDENTITY(1,1) NOT NULL,
+	[report_id] [int] NOT NULL,
+	[requested_by] [int] NULL,
+	[approved_by] [int] NULL,
+	[comments] [varchar](256) NOT NULL,
+	[is_active] [smallint] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_ReportRequests] PRIMARY KEY CLUSTERED 
+(
+	[report_request_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[report_subscription]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[report_subscription](
+	[report_subscription_id] [int] IDENTITY(1,1) NOT NULL,
+	[report_id] [int] NULL,
+	[userid_email] [int] NULL,
+	[frequency] [varchar](256) NULL,
+	[weekday] [varchar](256) NULL,
+	[date_of_month] [varchar](256) NULL,
+	[sheduled_time] [time](7) NULL,
+	[start_date] [date] NULL,
+	[end_date] [date] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_ReportSubscription] PRIMARY KEY CLUSTERED 
+(
+	[report_subscription_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[report_subscriptions]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[report_subscriptions](
+	[report_subscription_id] [int] IDENTITY(1,1) NOT NULL,
+	[report_id] [int] NULL,
+	[userid_email] [int] NULL,
+	[frequency] [varchar](256) NULL,
+	[weekday] [varchar](256) NULL,
+	[date_of_month] [varchar](256) NULL,
+	[sheduled_time] [time](7) NULL,
+	[start_date] [date] NULL,
+	[end_date] [date] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [pk_report_subscriptions] PRIMARY KEY CLUSTERED 
+(
+	[report_subscription_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ReportMoreInfo]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ReportMoreInfo](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[report_id] [int] NOT NULL,
+	[title] [varchar](256) NULL,
+	[description] [varchar](256) NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[create_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_ReportMoreInfo] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[reports]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[reports](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[pbi_report_id] [varchar](256) NOT NULL,
+	[report_name] [varchar](512) NOT NULL,
+	[pbi_report_app_id] [varchar](256) NOT NULL,
+	[report_prefix] [varchar](256) NULL,
+	[pbi_workspace_id] [varchar](256) NOT NULL,
+	[department_id] [int] NOT NULL,
+	[category_id] [int] NULL,
+	[report_description] [varchar](256) NULL,
+	[report_type] [smallint] NULL,
+	[cognos_link] [varchar](max) NOT NULL,
+	[notes] [varchar](max) NULL,
+	[has_data_level_security] [bit] NOT NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Reports] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ReportSubscriptionLogs]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ReportSubscriptionLogs](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[report_subscription_id] [int] NULL,
+	[generated_time] [datetime] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_ReportSubscriptionLogs] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Test]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Test](
+	[ID] [int] NULL,
+	[Name] [varchar](256) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[testuser]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[testuser](
+	[user_id] [int] IDENTITY(1,1) NOT NULL,
+	[username] [varchar](256) NULL,
+	[email] [varchar](256) NULL,
+	[department_id] [int] NULL,
+	[coworker_id] [varchar](50) NULL,
+	[reporting_manager_id] [varchar](50) NULL,
+	[designation] [varchar](256) NULL,
+	[first_name] [varchar](256) NULL,
+	[last_name] [varchar](256) NULL,
+	[is_active] [bit] NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NULL,
+	[created_by] [varchar](256) NULL,
+ CONSTRAINT [PK_testuser] PRIMARY KEY CLUSTERED 
+(
+	[user_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_action_types]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_action_types](
+	[user_action_type_id] [int] IDENTITY(1,1) NOT NULL,
+	[action_type] [varchar](256) NULL,
+	[action_type_desc] [varchar](256) NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](50) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](50) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_User_action_types] PRIMARY KEY CLUSTERED 
+(
+	[user_action_type_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_actions]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_actions](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[report_id] [int] NULL,
+	[page_name] [varchar](256) NULL,
+	[user_id] [int] NULL,
+	[user_action_type_id] [int] NULL,
+	[action_desc] [varchar](256) NULL,
+	[old_value] [varchar](256) NULL,
+	[new_value] [varchar](256) NULL,
+	[timestamp] [varchar](256) NULL,
+	[user_browser_details] [varchar](256) NULL,
+	[created_by] [varchar](256) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_User_actions] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_groups]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_groups](
+	[user_group_id] [int] IDENTITY(1,1) NOT NULL,
+	[user_group_name] [varchar](256) NOT NULL,
+	[dept_id] [int] NOT NULL,
+	[parent_id] [int] NULL,
+	[is_active] [bit] NOT NULL,
+	[created_by] [varchar](250) NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](250) NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+ CONSTRAINT [PK_UserGroups] PRIMARY KEY CLUSTERED 
+(
+	[user_group_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[users]    Script Date: 10/7/2021 5:18:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[users](
+	[user_id] [int] IDENTITY(1,1) NOT NULL,
+	[username] [varchar](256) NULL,
+	[email] [varchar](256) NULL,
+	[department_id] [int] NULL,
+	[coworker_id] [varchar](50) NULL,
+	[reporting_manager_id] [varchar](50) NULL,
+	[designation] [varchar](256) NULL,
+	[first_name] [varchar](256) NULL,
+	[last_name] [varchar](256) NULL,
+	[is_active] [bit] NOT NULL,
+	[modified_date] [datetime] NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[modified_by] [varchar](256) NULL,
+	[created_by] [varchar](256) NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[user_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[AccessLevel] ADD  CONSTRAINT [DF_AccessLevel_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[AccessLevel] ADD  CONSTRAINT [DF_AccessLevel_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[AccessLevel] ADD  CONSTRAINT [DF_AccessLevel_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[AccessLevel] ADD  CONSTRAINT [DF_AccessLevel_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[AccessLevel] ADD  CONSTRAINT [DF_AccessLevel_can_view]  DEFAULT ((0)) FOR [can_view]
+GO
+ALTER TABLE [dbo].[AccessLevel] ADD  CONSTRAINT [DF_AccessLevel_can_approve]  DEFAULT ((0)) FOR [can_approve]
+GO
+ALTER TABLE [dbo].[AccessLevel] ADD  CONSTRAINT [DF_AccessLevel_can_share]  DEFAULT ((0)) FOR [can_share]
+GO
+ALTER TABLE [dbo].[AccessLevel] ADD  CONSTRAINT [DF_AccessLevel_can_subscribe]  DEFAULT ((0)) FOR [can_subscribe]
+GO
+ALTER TABLE [dbo].[AccessLevelDesignations] ADD  CONSTRAINT [DF_AccessLevelDesignations_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[AccessLevelDesignations] ADD  CONSTRAINT [DF_AccessLevelDesignations_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[AccessLevelDesignations] ADD  CONSTRAINT [DF_AccessLevelDesignations_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[AccessLevelDesignations] ADD  CONSTRAINT [DF_AccessLevelDesignations_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[admin_permission_category] ADD  CONSTRAINT [df_admin_permission_category_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[admin_permission_category] ADD  CONSTRAINT [df_admin_permission_category_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[admin_permission_category] ADD  CONSTRAINT [df_admin_permission_category_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[admin_permission_category] ADD  CONSTRAINT [df_admin_permission_category_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[admin_permission_category] ADD  CONSTRAINT [df_admin_permission_category_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[admin_permission_category_configuration] ADD  CONSTRAINT [df_admin_permission_category_configuration_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[admin_permission_category_configuration] ADD  CONSTRAINT [df_admin_permission_category_configuration_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[admin_permission_category_configuration] ADD  CONSTRAINT [df_admin_permission_category_configuration_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[admin_permission_category_configuration] ADD  CONSTRAINT [df_admin_permission_category_configuration_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[admin_permission_category_configuration] ADD  CONSTRAINT [df_admin_permission_category_configuration_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[admin_permissions] ADD  CONSTRAINT [df_admin_permissions_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[admin_permissions] ADD  CONSTRAINT [df_admin_permissions_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[admin_permissions] ADD  CONSTRAINT [df_admin_permissions_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[admin_permissions] ADD  CONSTRAINT [df_admin_permissions_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[admin_permissions] ADD  CONSTRAINT [df_admin_permissions_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[admin_role_permissions] ADD  CONSTRAINT [df_admin_role_permission_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[admin_role_permissions] ADD  CONSTRAINT [df_admin_role_permission_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[admin_role_permissions] ADD  CONSTRAINT [df_admin_role_permission_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[admin_role_permissions] ADD  CONSTRAINT [df_admin_role_permission_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[admin_role_permissions] ADD  CONSTRAINT [df_admin_role_permission_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[admin_role_type_permission_configuration] ADD  CONSTRAINT [df_admin_role_type_permission_configuration_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[admin_role_type_permission_configuration] ADD  CONSTRAINT [df_admin_role_type_permission_configuration_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[admin_role_type_permission_configuration] ADD  CONSTRAINT [df_admin_role_type_permission_configuration_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[admin_role_type_permission_configuration] ADD  CONSTRAINT [df_admin_role_type_permission_configuration_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[admin_role_type_permission_configuration] ADD  CONSTRAINT [df_admin_role_type_permission_configuration_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[admin_role_types] ADD  CONSTRAINT [DF_admin_role_type_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[admin_role_types] ADD  CONSTRAINT [DF_admin_role_type_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[admin_role_types] ADD  CONSTRAINT [DF_admin_role_type_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[admin_role_types] ADD  CONSTRAINT [DF_admin_role_type_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[admin_role_types] ADD  CONSTRAINT [DF_admin_role_type_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[admin_roles] ADD  CONSTRAINT [DF_admin_roles_is_default_role]  DEFAULT ((0)) FOR [is_default_role]
+GO
+ALTER TABLE [dbo].[admin_roles] ADD  CONSTRAINT [DF_admin_roles_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[admin_roles] ADD  CONSTRAINT [DF_admin_roles_di4_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[admin_roles] ADD  CONSTRAINT [DF_admin_roles_di4_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[admin_roles] ADD  CONSTRAINT [DF_admin_roles_di4_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[admin_roles] ADD  CONSTRAINT [DF_admin_roles_di4_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[admin_users] ADD  CONSTRAINT [df_admin_users_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[admin_users] ADD  CONSTRAINT [df_admin_users_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[admin_users] ADD  CONSTRAINT [df_admin_users_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[admin_users] ADD  CONSTRAINT [df_admin_users_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[admin_users] ADD  CONSTRAINT [df_admin_users_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[AdminTypes] ADD  CONSTRAINT [DF_AdminTypes_di4_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[AdminTypes] ADD  CONSTRAINT [DF_AdminTypes_di4_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[AdminTypes] ADD  CONSTRAINT [DF_AdminTypes_di4_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[AdminTypes] ADD  CONSTRAINT [DF_AdminTypes_di4_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[Approval_master] ADD  CONSTRAINT [DF_Approval_master_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[Approval_master] ADD  CONSTRAINT [DF_Approval_master_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[Approval_master] ADD  CONSTRAINT [DF_Approval_master_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[Approval_master] ADD  CONSTRAINT [DF_Approval_master_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[Constants] ADD  CONSTRAINT [DF_Constants_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[Constants] ADD  CONSTRAINT [DF_Constants_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[Constants] ADD  CONSTRAINT [DF_Constants_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[Constants] ADD  CONSTRAINT [DF_Constants_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[Constants] ADD  CONSTRAINT [DF_Constants_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[department_admin] ADD  CONSTRAINT [DF_department_admin_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[department_admin] ADD  CONSTRAINT [DF_department_admin_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[department_admin] ADD  CONSTRAINT [DF_department_admin_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[department_admin] ADD  CONSTRAINT [DF_department_admin_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[departments] ADD  CONSTRAINT [DF_Departments_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[departments] ADD  CONSTRAINT [DF_Departments_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[departments] ADD  CONSTRAINT [DF_Departments_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[departments] ADD  CONSTRAINT [DF_Departments_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[feedback] ADD  CONSTRAINT [DF_Feedback_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[feedback] ADD  CONSTRAINT [DF_Feedback_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[feedback] ADD  CONSTRAINT [DF_Feedback_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[feedback] ADD  CONSTRAINT [DF_Feedback_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[feedback_topics] ADD  CONSTRAINT [DF_feedback_topics_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[feedback_topics] ADD  CONSTRAINT [DF_feedback_topics_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[feedback_topics] ADD  CONSTRAINT [DF_feedback_topics_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[feedback_topics] ADD  CONSTRAINT [DF_feedback_topics_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[group_admin] ADD  CONSTRAINT [DF_group_admin_is_enable_to_crt_user_groups]  DEFAULT ((0)) FOR [is_enable_to_crt_user_groups]
+GO
+ALTER TABLE [dbo].[group_admin] ADD  CONSTRAINT [DF_group_admin_is_enable_to_crt_user_roles]  DEFAULT ((0)) FOR [is_enable_to_crt_user_roles]
+GO
+ALTER TABLE [dbo].[group_admin] ADD  CONSTRAINT [DF_group_admin_is_enable_to_add_new_report]  DEFAULT ((0)) FOR [is_enable_to_add_new_report]
+GO
+ALTER TABLE [dbo].[group_admin] ADD  CONSTRAINT [DF_group_admin_is_able_to_report_request_access]  DEFAULT ((0)) FOR [is_able_to_report_request_access]
+GO
+ALTER TABLE [dbo].[group_admin] ADD  CONSTRAINT [DF_group_admin_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[group_admin] ADD  CONSTRAINT [DF_group_admin_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[group_admin] ADD  CONSTRAINT [DF_group_admin_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[group_admin] ADD  CONSTRAINT [DF_group_admin_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[group_members] ADD  CONSTRAINT [DF_GroupMembers_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[group_members] ADD  CONSTRAINT [DF_GroupMembers_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[group_members] ADD  CONSTRAINT [DF_GroupMembers_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[group_members] ADD  CONSTRAINT [DF_GroupMembers_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[help_indexes] ADD  CONSTRAINT [DF_help_indexes_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[help_indexes] ADD  CONSTRAINT [DF_help_indexes_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[help_indexes] ADD  CONSTRAINT [DF_help_indexes_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[help_indexes] ADD  CONSTRAINT [DF_help_indexes_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[help_section] ADD  CONSTRAINT [DF_help_section_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[help_section] ADD  CONSTRAINT [DF_help_section_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[help_section] ADD  CONSTRAINT [DF_help_section_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[help_section] ADD  CONSTRAINT [DF_help_section_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[log_level_master] ADD  CONSTRAINT [df_log_level_master_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[log_level_master] ADD  CONSTRAINT [df_log_level_master_updated_on]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[log_level_master] ADD  CONSTRAINT [df_log_level_master_created_on]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[log_level_master] ADD  CONSTRAINT [df_log_level_master_updated_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[log_level_master] ADD  CONSTRAINT [df_log_level_master_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[logs] ADD  CONSTRAINT [df_logger_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[logs] ADD  CONSTRAINT [df_logger_updated_on]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[logs] ADD  CONSTRAINT [df_logger_created_on]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[logs] ADD  CONSTRAINT [df_logger_updated_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[logs] ADD  CONSTRAINT [df_logger_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[report_access] ADD  CONSTRAINT [DF_ReportAccess_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[report_access] ADD  CONSTRAINT [DF_ReportAccess_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[report_access] ADD  CONSTRAINT [DF_ReportAccess_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[report_access] ADD  CONSTRAINT [DF_ReportAccess_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[report_category] ADD  CONSTRAINT [DF_ReportCategoryMaster_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[report_category] ADD  CONSTRAINT [DF_ReportCategoryMaster_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[report_category] ADD  CONSTRAINT [DF_ReportCategoryMaster_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[report_category] ADD  CONSTRAINT [DF_ReportCategoryMaster_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[report_filters] ADD  CONSTRAINT [DF_ReportFilters_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[report_filters] ADD  CONSTRAINT [DF_ReportFilters_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[report_filters] ADD  CONSTRAINT [DF_ReportFilters_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[report_filters] ADD  CONSTRAINT [DF_ReportFilters_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[report_requests] ADD  CONSTRAINT [DF_ReportRequests_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[report_requests] ADD  CONSTRAINT [DF_ReportRequests_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[report_requests] ADD  CONSTRAINT [DF_ReportRequests_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[report_requests] ADD  CONSTRAINT [DF_ReportRequests_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[report_subscription] ADD  CONSTRAINT [DF_ReportSubscription_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[report_subscription] ADD  CONSTRAINT [DF_ReportSubscription_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[report_subscription] ADD  CONSTRAINT [DF_ReportSubscription_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[report_subscription] ADD  CONSTRAINT [DF_ReportSubscription_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[report_subscriptions] ADD  CONSTRAINT [df_report_subscriptions_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[report_subscriptions] ADD  CONSTRAINT [df_report_subscriptions_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[report_subscriptions] ADD  CONSTRAINT [df_report_subscriptions_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[report_subscriptions] ADD  CONSTRAINT [df_report_subscriptions_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[report_subscriptions] ADD  CONSTRAINT [df_report_subscriptions_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[ReportMoreInfo] ADD  CONSTRAINT [DF_ReportMoreInfo_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[ReportMoreInfo] ADD  CONSTRAINT [DF_ReportMoreInfo_create_date]  DEFAULT (getutcdate()) FOR [create_date]
+GO
+ALTER TABLE [dbo].[ReportMoreInfo] ADD  CONSTRAINT [DF_ReportMoreInfo_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[ReportMoreInfo] ADD  CONSTRAINT [DF_ReportMoreInfo_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[reports] ADD  CONSTRAINT [df_reports_is_active]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[reports] ADD  CONSTRAINT [DF_Reports_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[reports] ADD  CONSTRAINT [DF_Reports_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[reports] ADD  CONSTRAINT [DF_Reports_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[reports] ADD  CONSTRAINT [DF_Reports_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[ReportSubscriptionLogs] ADD  CONSTRAINT [DF_ReportSubscriptionLogs_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[ReportSubscriptionLogs] ADD  CONSTRAINT [DF_ReportSubscriptionLogs_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[ReportSubscriptionLogs] ADD  CONSTRAINT [DF_ReportSubscriptionLogs_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[ReportSubscriptionLogs] ADD  CONSTRAINT [DF_ReportSubscriptionLogs_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[testuser] ADD  CONSTRAINT [DF_testuser_IsActive]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[testuser] ADD  CONSTRAINT [DF_testuser_UpdatedOn]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[testuser] ADD  CONSTRAINT [DF_testuser_CreatedOn]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[testuser] ADD  CONSTRAINT [DF_testuser_UpdatedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[testuser] ADD  CONSTRAINT [DF_testuser_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[user_action_types] ADD  CONSTRAINT [DF_User_action_types_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[user_action_types] ADD  CONSTRAINT [DF_User_action_types_create_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[user_action_types] ADD  CONSTRAINT [DF_User_action_types_modified_by]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[user_action_types] ADD  CONSTRAINT [DF_User_action_types_modified_date]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[user_actions] ADD  CONSTRAINT [df_user_actions_created_by]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[user_actions] ADD  CONSTRAINT [df_user_actions_created_date]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[user_groups] ADD  CONSTRAINT [DF_UserGroups_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[user_groups] ADD  CONSTRAINT [DF_UserGroups_CreateDate]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[user_groups] ADD  CONSTRAINT [DF_UserGroups_ModifiedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[user_groups] ADD  CONSTRAINT [DF_UserGroups_ModifiedDate]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[users] ADD  CONSTRAINT [DF_Users_IsActive]  DEFAULT ((0)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[users] ADD  CONSTRAINT [DF_Users_UpdatedOn]  DEFAULT (getutcdate()) FOR [modified_date]
+GO
+ALTER TABLE [dbo].[users] ADD  CONSTRAINT [DF_Users_CreatedOn]  DEFAULT (getutcdate()) FOR [created_date]
+GO
+ALTER TABLE [dbo].[users] ADD  CONSTRAINT [DF_Users_UpdatedBy]  DEFAULT (suser_sname()) FOR [modified_by]
+GO
+ALTER TABLE [dbo].[users] ADD  CONSTRAINT [DF_Users_CreatedBy]  DEFAULT (suser_sname()) FOR [created_by]
+GO
+ALTER TABLE [dbo].[AccessLevelDesignations]  WITH CHECK ADD  CONSTRAINT [FK_AccessLevelDesignations_AccessLevel] FOREIGN KEY([access_level_id])
+REFERENCES [dbo].[AccessLevel] ([access_level_id])
+GO
+ALTER TABLE [dbo].[AccessLevelDesignations] CHECK CONSTRAINT [FK_AccessLevelDesignations_AccessLevel]
+GO
+ALTER TABLE [dbo].[AccessLevelDesignations]  WITH CHECK ADD  CONSTRAINT [FK_AccessLevelDesignations_Departments] FOREIGN KEY([department_id])
+REFERENCES [dbo].[departments] ([department_id])
+GO
+ALTER TABLE [dbo].[AccessLevelDesignations] CHECK CONSTRAINT [FK_AccessLevelDesignations_Departments]
+GO
+ALTER TABLE [dbo].[Approval_master]  WITH CHECK ADD  CONSTRAINT [FK_Approval_master_Reports] FOREIGN KEY([report_id])
+REFERENCES [dbo].[reports] ([id])
+GO
+ALTER TABLE [dbo].[Approval_master] CHECK CONSTRAINT [FK_Approval_master_Reports]
+GO
+ALTER TABLE [dbo].[feedback]  WITH CHECK ADD  CONSTRAINT [FK_Feedback_Departments] FOREIGN KEY([department_id])
+REFERENCES [dbo].[departments] ([department_id])
+GO
+ALTER TABLE [dbo].[feedback] CHECK CONSTRAINT [FK_Feedback_Departments]
+GO
+ALTER TABLE [dbo].[help_indexes]  WITH CHECK ADD  CONSTRAINT [FK_help_indexes_help_section] FOREIGN KEY([help_section_id])
+REFERENCES [dbo].[help_section] ([help_section_id])
+GO
+ALTER TABLE [dbo].[help_indexes] CHECK CONSTRAINT [FK_help_indexes_help_section]
+GO
+ALTER TABLE [dbo].[report_access]  WITH CHECK ADD  CONSTRAINT [FK_ReportAccess_Reports] FOREIGN KEY([report_id])
+REFERENCES [dbo].[reports] ([id])
+GO
+ALTER TABLE [dbo].[report_access] CHECK CONSTRAINT [FK_ReportAccess_Reports]
+GO
+ALTER TABLE [dbo].[report_filters]  WITH CHECK ADD  CONSTRAINT [FK_ReportFilters_Reports] FOREIGN KEY([report_id])
+REFERENCES [dbo].[reports] ([id])
+GO
+ALTER TABLE [dbo].[report_filters] CHECK CONSTRAINT [FK_ReportFilters_Reports]
+GO
+ALTER TABLE [dbo].[report_requests]  WITH CHECK ADD  CONSTRAINT [FK_ReportRequests_Reports] FOREIGN KEY([report_id])
+REFERENCES [dbo].[reports] ([id])
+GO
+ALTER TABLE [dbo].[report_requests] CHECK CONSTRAINT [FK_ReportRequests_Reports]
+GO
+ALTER TABLE [dbo].[report_subscription]  WITH CHECK ADD  CONSTRAINT [FK_ReportSubscription_Reports] FOREIGN KEY([report_id])
+REFERENCES [dbo].[reports] ([id])
+GO
+ALTER TABLE [dbo].[report_subscription] CHECK CONSTRAINT [FK_ReportSubscription_Reports]
+GO
+ALTER TABLE [dbo].[ReportMoreInfo]  WITH CHECK ADD  CONSTRAINT [FK_ReportMoreInfo_Reports] FOREIGN KEY([report_id])
+REFERENCES [dbo].[reports] ([id])
+GO
+ALTER TABLE [dbo].[ReportMoreInfo] CHECK CONSTRAINT [FK_ReportMoreInfo_Reports]
+GO
+ALTER TABLE [dbo].[reports]  WITH CHECK ADD  CONSTRAINT [FK_Reports_ReportCategoryMaster] FOREIGN KEY([category_id])
+REFERENCES [dbo].[report_category] ([category_id])
+GO
+ALTER TABLE [dbo].[reports] CHECK CONSTRAINT [FK_Reports_ReportCategoryMaster]
+GO
+ALTER TABLE [dbo].[ReportSubscriptionLogs]  WITH CHECK ADD  CONSTRAINT [FK_ReportSubscriptionLogs_ReportSubscription] FOREIGN KEY([report_subscription_id])
+REFERENCES [dbo].[report_subscription] ([report_subscription_id])
+GO
+ALTER TABLE [dbo].[ReportSubscriptionLogs] CHECK CONSTRAINT [FK_ReportSubscriptionLogs_ReportSubscription]
+GO
+ALTER TABLE [dbo].[user_actions]  WITH CHECK ADD  CONSTRAINT [FK_User_actions_Reports] FOREIGN KEY([report_id])
+REFERENCES [dbo].[reports] ([id])
+GO
+ALTER TABLE [dbo].[user_actions] CHECK CONSTRAINT [FK_User_actions_Reports]
+GO
+ALTER TABLE [dbo].[user_actions]  WITH CHECK ADD  CONSTRAINT [FK_User_actions_User_action_types] FOREIGN KEY([user_action_type_id])
+REFERENCES [dbo].[user_action_types] ([user_action_type_id])
+GO
+ALTER TABLE [dbo].[user_actions] CHECK CONSTRAINT [FK_User_actions_User_action_types]
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'1 --> powerBI  2 ---> Cognos' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'reports', @level2type=N'COLUMN',@level2name=N'report_type'
+GO

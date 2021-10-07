@@ -81,6 +81,30 @@ exports.getAdminRoles = async (req, res) => {
     });
 };
 
+exports.getAdminRolesPermissions = async (req, res) => {
+
+    contex.sequelize.query(`
+    WITH Category_Cte (categoryId, categoryName, parentCategory, parentCategoryName)  AS  
+    (  
+        SELECT ctg.admin_permission_category_id categoryId, ctg.admin_permission_category_name categoryName, 
+        CASE WHEN ctg.parent_category_id IS NULL THEN ctg.admin_permission_category_id  ELSE ctg.parent_category_id END prentCategory,
+        CASE WHEN pctg.admin_permission_category_name IS NULL THEN ctg.admin_permission_category_name  ELSE pctg.admin_permission_category_name END prentCategoryName	
+        FROM admin_permission_category  ctg 
+        left join admin_permission_category  pctg on ctg.parent_category_id = pctg.admin_permission_category_id
+    )
+    select cat.*, 
+    ad_pms.admin_permission_id admin_PermissionId, ad_pms.admin_permission_name adminPermissionName, 
+    ad_role_pms.is_view isView, ad_role_pms.is_add isAdd, ad_role_pms.is_edit isEdit, ad_role_pms.is_delete idDelete from Category_Cte cat
+    join admin_permissions  ad_pms on cat.categoryId = ad_pms.admin_permission_category_id  
+    join admin_role_permissions ad_role_pms on ad_pms.admin_permission_id = ad_role_pms.admin_permission_id
+    join admin_permission_category_configuration allowd_pms on ad_pms.admin_permission_category_id = allowd_pms.admin_permission_category_id
+    where ad_role_pms.admin_role_id = ${req.params.adminRoleId} and allowd_pms.admin_role_type_id = ${req.params.adminRoleTypId}
+    `, { type: QueryTypes.SELECT }).then((result) => {
+        console.log('res', result);        
+        res.send(result);
+    });
+};
+
 exports.getAdminRoleTypess = async (req, res) => {
 
     contex.getContext().adminRoleTypes.findAll({

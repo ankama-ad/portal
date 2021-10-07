@@ -9,43 +9,67 @@
                     
                     <div class="card-body cw-mat-tab-group p-0">
                         <mat-tab-group animationDuration="0ms" [(selectedIndex)]="activeTabIndex">
-                            <mat-tab label="Access Users" class="px-3">
-
+                            <mat-tab label="Assigned Users" class="px-3">
+                                <div class="d-flex justify-content-end align-items-center my-2">
+                                    <div>
+                                     <mat-form-field appearance="outline" class="mat-form-filed-sm">
+                                         <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+                                         <mat-icon matSuffix>search</mat-icon>
+                                     </mat-form-field>
+                                    </div>
+                                     <div class="col-auto mx-0 px-0">
+                                         <button type="button" mat-flat-button color="primary" class="mx-3"
+                                             (click)="addUserRoles()">Assign</button>
+                                     </div>
+                                 </div>
+                                 <mat-card>
+                                    <mat-divider class="table-header-divider"></mat-divider>
+                                    <mat-card-content>
+            
+                                        <mat-table #table [dataSource]="dataSource">
+                                            <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.columnDef">
+                                              <mat-header-cell *cdkHeaderCellDef>{{ column.header }}</mat-header-cell>
+                                              <mat-cell *cdkCellDef="let row">{{ column.cell(row) }}</mat-cell>
+                                            </ng-container>
+                                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                          </mat-table>
+                                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>                          
+                                    </mat-card-content>
+                                </mat-card>
                             </mat-tab>
                             <mat-tab label="Permissions">
+                                <div *ngFor="let item of permissions">
+                                    {{item.title}} {{item.children | json}}
+                                    <ng-container
+                                    *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.children }"
+                                  ></ng-container>
+                                </div>
+                               
+                                <ul>
+                                    <ng-container
+                                      *ngTemplateOutlet="recursiveListTmpl; context:{ list: permissions }"
+                                    ></ng-container>
+                                  </ul>
+                                  
+                                  <ng-template #recursiveListTmpl let-list="list">
+                                    <li *ngFor="let item of list">
+                                      {{ item.title }}
+                                      <ul *ngIf="item.children && item.children.length > 0">
+                                        <ng-container
+                                          *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.children }"
+                                        ></ng-container>
+                                      </ul>
+                                    </li>
+                                  </ng-template>
 
                             </mat-tab>
 
                         </mat-tab-group>
-                        <div class="d-flex justify-content-end align-items-center my-2">
-                           <div>
-                            <mat-form-field appearance="outline" class="mat-form-filed-sm">
-                                <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
-                                <mat-icon matSuffix>search</mat-icon>
-                            </mat-form-field>
-                           </div>
-                            <div class="col-auto mx-0 px-0">
-                                <button type="button" mat-flat-button color="primary" class="mx-3"
-                                    (click)="addUserRoles()">Assign</button>
-                            </div>
-                        </div>
+                        
                     </div>
 
-                    <mat-card>
-                        <mat-divider class="table-header-divider"></mat-divider>
-                        <mat-card-content>
-
-                            <mat-table #table [dataSource]="dataSource">
-                                <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.columnDef">
-                                  <mat-header-cell *cdkHeaderCellDef>{{ column.header }}</mat-header-cell>
-                                  <mat-cell *cdkCellDef="let row">{{ column.cell(row) }}</mat-cell>
-                                </ng-container>
-                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                              </mat-table>
-                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>                          
-                        </mat-card-content>
-                    </mat-card>
+                    
                 </div>
             </div>
         </div>

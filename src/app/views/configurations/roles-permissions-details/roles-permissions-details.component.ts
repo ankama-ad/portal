@@ -39,6 +39,8 @@ export class RolesPermissionsDetailsComponent implements OnInit {
   displayedColumns: Array<any>
   dataSource: any
   roleUsers: Array<any>
+  permissions:Array<any>
+  activeTabIndex = 0;
 
 
   constructor(private router: Router, private userRolesService: UserRolesService, private _snackBar: MatSnackBar) {
@@ -55,18 +57,52 @@ export class RolesPermissionsDetailsComponent implements OnInit {
 
   loadData(): void {
     let roleDetails$:Observable<any[]>;
+    let permissionDetails$:Observable<any[]>;
     if (this.adminRole.adminRoleTypeId === 1) { /// portal admin
       roleDetails$ = this.userRolesService.getAdminRoleUsers(this.adminRole);
     } else if (this.adminRole.adminRoleTypeId === 2) {
       roleDetails$ = this.userRolesService.getAdminRoleUsers(this.adminRole);
+      permissionDetails$ = this.userRolesService.getAdminRolePermissions(this.adminRole);
     } else if (this.adminRole.adminRoleTypeId === 3) {
       roleDetails$ = this.userRolesService.getAdminRoleUsers(this.adminRole);
+      permissionDetails$ = this.userRolesService.getAdminRolePermissions(this.adminRole);
     } else if (this.adminRole.adminRoleTypeId === 4) {
       roleDetails$ = this.userRolesService.getAdminRoleUsers(this.adminRole);
+      permissionDetails$ = this.userRolesService.getAdminRolePermissions(this.adminRole);
     }
     roleDetails$.subscribe(res => {
       this.roleUsers = res;
       this.buildTable();
+    })
+    permissionDetails$.subscribe(res => {
+      const groupBy = (items, key) => items.reduce(
+        (result, item) => ({
+          ...result,
+          [item[key]]: [
+            ...(result[item[key]] || []),
+            item,
+          ],
+        }), 
+        {},
+      );
+      
+      let parentgroup = groupBy(res, 'parentCategoryName')
+      let items = [];
+      Object.keys(parentgroup).forEach(key => {
+        items.push({title: key, childern: parentgroup[key]})
+      })
+      items.forEach((v,i) => {
+        let group = groupBy(v.childern, 'categoryName' )
+        let subitems = [];
+        Object.keys(group).forEach(key => {
+          if(key != v.title){
+           subitems.push({title: key, childern: group[key]})          
+          }
+        })
+        items[i].childern = subitems; 
+      });
+
+      this.permissions = items;
     })
   }
 

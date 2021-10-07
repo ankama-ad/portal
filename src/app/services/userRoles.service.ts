@@ -25,9 +25,13 @@ export class UserRolesService {
   }
 
   getAdminRoleUsers(model: any): Observable<any[]> {
-    return this.http.get<any[]>(this.baseApiUrl + `getAdminRoleUsers/${model.adminRoleId}/${model.adminRoleTypeId}`);
+    return this.http.get<any[]>(this.baseApiUrl + `getAdminRoleUsers/${model.adminRoleId}/${model.adminRoleTypeId}`);    
   }
 
+  getAdminRolePermissions(model: any): Observable<any[]> {
+    return this.http.get<any[]>(this.baseApiUrl + `getAdminRolePermissions/${model.adminRoleId}/${model.adminRoleTypeId}`);    
+  }
+  
   getAdminRoles(): Observable<any[]> {
     return this.http.get<any[]>(this.baseApiUrl + "getAdminRoles");
   }
