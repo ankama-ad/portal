@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 //
 
 const sequelize = new Sequelize('PortalDB', 'PortalAdmin', 'Portal@123', {
-  host: 'rcoedemodb.database.windows.net',
+  host: 'localhost',
   dialect: 'mssql',
   dialectOptions: {
     options: {
